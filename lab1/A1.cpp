@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
 	cout << "Threads  Time" << endl;
 
-	for (int nThreads = 1; nThreads <= 8; nThreads++) {
+	for (int nThreads = 1; nThreads <= 10; nThreads++) {
 		start = clock();
 		// in every iteration a different number of threads is working
 		#pragma omp parallel for reduction (max:max_val) num_threads(nThreads)
