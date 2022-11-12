@@ -20,20 +20,20 @@ int main(int argc, char** argv) {
 	random_shuffle(V.begin(), V.end());
 
 	int max_val = V[0];
-	clock_t start, finish;
+	double t;
 
-	cout << "Threads  Time" << endl;
+	cout << "Threads\t\tTime" << endl;
 
 	for (int nThreads = 1; nThreads <= 10; nThreads++) {
-		start = clock();
+		t = omp_get_wtime();
 		// in every iteration a different number of threads is working
 		#pragma omp parallel for reduction (max:max_val) num_threads(nThreads)
 			for (int i : V) {
 				max_val = max_val > i ? max_val : i;
 			}
-		finish = clock();
+		t = omp_get_wtime() - t;
 		
-		cout << nThreads << "        " << (double (finish - start) / CLOCKS_PER_SEC) << endl;
+		cout << nThreads << "\t\t" << t << endl;
 	}
 
 	cout << endl;
