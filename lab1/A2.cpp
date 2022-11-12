@@ -26,7 +26,7 @@ void matMul(int N, double **M1, double **M2, double **Mres, string order="ijk") 
 	double t, t1;
 	
 	cout << "Index order: " << order << endl;
-	cout << "Threads\t\tTime\t\tEfficiency" << endl;
+	cout << "Threads  Time \t\t Efficiency" << endl;
 	
 	for (int nThreads = 1; nThreads <= 10; nThreads++) {
 		if (nThreads == 1) {
@@ -36,9 +36,7 @@ void matMul(int N, double **M1, double **M2, double **Mres, string order="ijk") 
 			t = omp_get_wtime();
 		}
 
-		#pragma omp parallel num_threads(nThreads) shared(N) private(ind1,ind2,ind3)
-		{
-		#pragma for collapse(3) schedule(static)
+		#pragma omp parallel for num_threads(nThreads)
 			for (int ind1 = 0; ind1 < N; ind1++) {
 				for (int ind2 = 0; ind2 < N; ind2++) {
 					for (int ind3 = 0; ind3 < N; ind3++) {
@@ -58,7 +56,6 @@ void matMul(int N, double **M1, double **M2, double **Mres, string order="ijk") 
 					}
 				}
 			}
-		}
 
 		if (nThreads == 1) {
 			t1 = omp_get_wtime() - t1;
@@ -67,7 +64,7 @@ void matMul(int N, double **M1, double **M2, double **Mres, string order="ijk") 
 			t = omp_get_wtime() - t;
 		}
 
-		cout << nThreads << "\t\t" << round(t * 10e5) / 10e5 << "\t\t" << round(t1 * 10e6 / t) / 10e6 << endl;
+		cout << nThreads << " \t " << round(t * 10e5) / 10e5 << " \t " << round(t1 * 10e6 / t) / 10e6 << endl;
 	}
 
 }
