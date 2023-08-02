@@ -1,2 +1,2 @@
 # itmo-parallel
-Parallel programming assignments in C++ for ITMO University.
+ITMO University assignments for the discipline "Parallel Programming".
